@@ -872,27 +872,27 @@ public class POSview {
 		CustomerName.setText("");
 
 		// delete this when you go live
-		//
-		testsetEmployee();
-		enableall();
-		EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
-		trans.setEmpid(emp.getId());
+//		//
+//		testsetEmployee();
+//		enableall();
+//		EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
+//		trans.setEmpid(emp.getId());
 
-		// //uncomment this when you go live
-		// logwin.open();
-		// boolean tempbool = logwin.isSuccessful();
-		// String empid = logwin.getUsername();
-		// if(tempbool){
-		// enableall();
-		//
-		// setEmployee(empid);
-		// //System.out.println("");
-		// EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
-		// enablemenu();
-		// }
-		// else{
-		// shlPosView.dispose();
-		// }
+		 //uncomment this when you go live
+		 logwin.open();
+		 boolean tempbool = logwin.isSuccessful();
+		 String empid = logwin.getUsername();
+		 if(tempbool){
+		 enableall();
+		
+		 setEmployee(empid);
+		 //System.out.println("");
+		 EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
+		 enablemenu();
+		 }
+		 else{
+		 shlPosView.dispose();
+		 }
 	}
 
 	private void refreshpricevalues() {

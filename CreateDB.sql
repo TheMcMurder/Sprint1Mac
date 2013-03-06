@@ -57,10 +57,10 @@ CREATE TABLE employee (
 );
 INSERT INTO businessobject(id, botype) VALUES ('employee1', 'edu.byu.isys414.jmcmurdi.IntexII.Employee');
 --INSERT INTO person(id, firstname, lastname, phone) VALUES ('employee1', 'Bart', 'Simpson', '801-555-0222');
-INSERT INTO employee(id, firstname, lastname, phone, username) VALUES ('employee1','James', 'West', '(601)555-5555', 'jmcmurdi');
+INSERT INTO employee(id, firstname, lastname, phone, username) VALUES ('employee1','Justin', 'McMurdie', '(601)555-5555', 'jmcmurdi');
 INSERT INTO businessobject(id, botype) VALUES ('employee2', 'edu.byu.isys414.jmcmurdi.IntexII.Employee');
 --INSERT INTO person(id, firstname, lastname, phone) VALUES ('employee2', 'Homer', 'Simpson', '801-555-3456');
-INSERT INTO employee(id, firstname, lastname, phone,username) VALUES ('employee2', 'Kevin', 'Gardner', '801-555-3456', 'kgard91');
+INSERT INTO employee(id, firstname, lastname, phone,username) VALUES ('employee2', 'Bret', 'Markowski', '801-555-3456', 'bretm23');
 
 -- STORE Table;
 CREATE TABLE store(
@@ -194,6 +194,11 @@ cprodcomrate  NUMERIC(5,4) DEFAULT 0
 INSERT INTO businessobject(id, botype) VALUES ('prod1', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
 INSERT INTO product(id, prodprice, prodtype, prodnum) VALUES ('prod1', 150.00, 'camera', 1);
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod1', 'Canon Rebel version1', 'test dec', .025);
+
+
+INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
+INSERT INTO product(id, prodprice, prodtype, prodnum) VALUES ('prod3', 5.00, 'camera case', 3);
+INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
 
 --physical product table;
 CREATE TABLE pproduct(

@@ -652,7 +652,7 @@ public class Tester {
 						}
 					}
 				} // integer
-				else if (fieldType == Double.class || fieldType == double.class) {
+				else if (fieldType == double.class || fieldType == double.class) {
 
 					//System.out.println("double");
 					double value1 = (double) method.invoke(Obj1);

@@ -168,6 +168,7 @@ public class FindProd extends Dialog {
 		new Label(composite_1, SWT.NONE);
 		
 		Label lblResults = new Label(composite_1, SWT.NONE);
+		lblResults.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		lblResults.setText("Results:");
 		lblResults.setFont(SWTResourceManager.getFont("Ubuntu", 20, SWT.NORMAL));
 		lblResults.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -180,6 +181,7 @@ public class FindProd extends Dialog {
 		new Label(composite_1, SWT.NONE);
 		
 		Label lblAmount = new Label(composite_1, SWT.RIGHT);
+		lblAmount.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		lblAmount.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblAmount.setAlignment(SWT.RIGHT);
 		lblAmount.setText("Amount:");
