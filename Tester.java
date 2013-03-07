@@ -652,11 +652,11 @@ public class Tester {
 						}
 					}
 				} // integer
-				else if (fieldType == double.class || fieldType == double.class) {
+				else if (fieldType == Double.class || fieldType == double.class) {
 
 					//System.out.println("double");
-					double value1 = (double) method.invoke(Obj1);
-					double value2 = (double) method.invoke(Obj2);
+					double value1 = (Double) method.invoke(Obj1);
+					double value2 = (Double) method.invoke(Obj2);
 
 					if (value1 != 0 && value2 != 0) {
 						if (method.invoke(Obj1).equals(method.invoke(Obj2))) {
@@ -721,8 +721,8 @@ public class Tester {
 
 					//System.out.println("boolean");
 
-					boolean value1 = (boolean) method.invoke(Obj1);
-					boolean value2 = (boolean) method.invoke(Obj2);
+					boolean value1 = (Boolean) method.invoke(Obj1);
+					boolean value2 = (Boolean) method.invoke(Obj2);
 
 					if (value1 != value2) {
 						//System.out.println("Booleans are not the same");
