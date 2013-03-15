@@ -31,6 +31,8 @@ public class PProduct extends Product {
 	private String cprodid = null;
 	@BusinessObjectField
 	private String storeid = null;
+	@BusinessObjectField
+	private String name = null;
 	
 	
 	/** Creates a new instance of this object */
@@ -183,6 +185,17 @@ public class PProduct extends Product {
 	 */
 	public void setStoreid(String storeid) {
 		this.storeid = storeid;
+		setDirty();
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 		setDirty();
 	}
 

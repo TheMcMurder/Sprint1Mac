@@ -212,6 +212,7 @@ datepuchased  DATE DEFAULT NULL,
 cost          NUMERIC(8,2) DEFAULT 0,
 status        VARCHAR(250),
 pprodcomrate  NUMERIC(5,4) DEFAULT 0,
+name          VARCHAR(60),
 cprodid       VARCHAR(40) REFERENCES cproduct(id),
 storeid       VARCHAR(40) REFERENCES store(id)
 );
