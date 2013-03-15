@@ -81,7 +81,7 @@ public class Tester {
 	
 	}
 
-	//@Test
+	@Test
 	public void TestStoreProd() throws Exception{
 		StoreProd c = BusinessObjectDAO.getInstance().create("StoreProd", "storeprodtempitem1");
 		
@@ -420,7 +420,7 @@ public class Tester {
 
 	}
 
-	@Test
+	//@Test
 		public void TestProductandpprod() throws Exception{
 			
 			PProduct c = BusinessObjectDAO.getInstance().create("PProduct", "pproducttemp1");
