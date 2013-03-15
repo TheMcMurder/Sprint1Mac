@@ -93,6 +93,9 @@ email         VARCHAR(250),
 address       VARCHAR(250),
 state         VARCHAR(50),
 zip           VARCHAR(25),
+password      VARCHAR(50),
+verified      BOOLEAN,
+validation    VARCHAR(40),
 phone         VARCHAR(50)
 );
 

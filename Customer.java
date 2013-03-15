@@ -25,6 +25,12 @@ public class Customer extends BusinessObject {
 	private String state = null;
 	@BusinessObjectField
 	private String zip = null;
+	@BusinessObjectField
+	private String password = null;
+	@BusinessObjectField
+	private boolean verified = false;
+	@BusinessObjectField
+	private String validation = null;
 
 	/** Creates a new instance of this object */
 	public Customer(String id) {
@@ -133,6 +139,33 @@ public class Customer extends BusinessObject {
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
+		setDirty();
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+		setDirty();
+	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+		setDirty();
+	}
+
+	public String getValidation() {
+		return validation;
+	}
+
+	public void setValidation(String validation) {
+		this.validation = validation;
 		setDirty();
 	}
 
