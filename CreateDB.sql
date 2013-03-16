@@ -7,22 +7,27 @@
 
 
 ALTER TABLE employee DROP FOREIGN KEY assignedstore;
-DROP TABLE storeprod;
-DROP TABLE generalledger;
-DROP TABLE cproduct;
-DROP TABLE pproduct;
-DROP TABLE product;
-DROP TABLE sale;
-DROP TABLE revsource;
-DROP TABLE commission;
-DROP TABLE employee;
-DROP TABLE customer;
-DROP TABLE debitcredit;
-DROP TABLE journalentry;
-DROP TABLE payment;
-DROP TABLE store;
-DROP TABLE transaction;
-DROP TABLE businessobject;
+DROP TABLE IF EXISTS storeprod;
+DROP TABLE IF EXISTS conceptualrental;
+DROP TABLE IF EXISTS forsale;
+DROP TABLE IF EXISTS forrent;
+DROP TABLE IF EXISTS generalledger;
+DROP TABLE IF EXISTS cproduct;
+DROP TABLE IF EXISTS pproduct;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS sale;
+DROP TABLE IF EXISTS rental;
+DROP TABLE IF EXISTS revsource;
+DROP TABLE IF EXISTS commission;
+DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS membership;
+DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS debitcredit;
+DROP TABLE IF EXISTS journalentry;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS store;
+DROP TABLE IF EXISTS transaction;
+DROP TABLE IF EXISTS businessobject;
 
 
 
@@ -102,6 +107,17 @@ phone         VARCHAR(50)
 INSERT INTO businessobject(id, botype) VALUES ('customer1', 'edu.byu.isys414.jmcmurdi.IntexII.Customer');
 INSERT INTO customer(id, firstname, lastname ) VALUES ('customer1', 'Adam', 'Bilodeau');
 
+
+-- Membership Table;
+CREATE TABLE membership(
+id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
+creditcard    VARCHAR(40),
+custid        VARCHAR(40) REFERENCES customer(id)
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('membership1', 'edu.byu.isys414.jmcmurdi.IntexII.Membership');
+INSERT INTO membership (id, creditcard, custid) VALUES ('membership1', '23444566743246534', 'customer1');
+
 --Journal Entry table;
 CREATE TABLE journalentry (
 id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
@@ -115,7 +131,7 @@ INSERT INTO journalentry (id, transdate) VALUES ('journalentry1', '2012-01-01 13
 CREATE TABLE debitcredit (
 id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
 journalentryid VARCHAR(40) REFERENCES journalentry(id),
-isdebit       boolean,
+isdebit       BOOLEAN,
 glname        VARCHAR(50),
 amount        NUMERIC(12,2) DEFAULT 0
 );
@@ -200,11 +216,12 @@ INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod1', 150
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod1', 'Canon Rebel version1', 'test dec', .025);
 
 INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
-INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.00, 'cproduct', 1, 'camera case');
+INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.00, 'cproduct', 3, 'camera case');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
---INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
---INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod3', 5.00, 'cproduct', 3, 'camera case');
---INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
+
+INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
+INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod5', 5.00, 'cproduct', 5, 'Panasonic Vierra');
+INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod5', 'Panasonic Vierra', 'Panasonic TV', .025);
 
 --physical product table;
 CREATE TABLE pproduct(
@@ -215,15 +232,11 @@ datepuchased  DATE DEFAULT NULL,
 cost          NUMERIC(8,2) DEFAULT 0,
 status        VARCHAR(250),
 pprodcomrate  NUMERIC(5,4) DEFAULT 0,
-ppname          VARCHAR(60),
+ppname        VARCHAR(60),
 cprodid       VARCHAR(40) REFERENCES cproduct(id),
 storeid       VARCHAR(40) REFERENCES store(id)
 );
 
-
-INSERT INTO businessobject(id, botype) VALUES ('prod2', 'edu.byu.isys414.jmcmurdi.IntexII.PProduct');
-INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod2', 150.00, 'camera', 2, 'pproduct');
-INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409');
 
 --store product association class table;
 CREATE TABLE storeprod(
@@ -239,6 +252,56 @@ INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES
 
 INSERT INTO businessobject (id, botype) VALUES ('storeprod2', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
 INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod2', 'store1', 'prod3', 7, 'Lobby in bin');
+
+--Rental table;
+CREATE TABLE rental(
+id            VARCHAR(40) PRIMARY KEY REFERENCES revsource,
+datein        DATE DEFAULT NULL,
+dateout       DATE DEFAULT NULL,
+datedue       DATE DEFAULT NULL,
+workordernum  INTEGER NOT NULL DEFAULT 0,
+remindersent  BOOLEAN
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('revsource2', 'edu.byu.isys414.jmcmurdi.IntexII.Rental');
+INSERT INTO revsource(id, chargeamount, revtype) VALUES('revsource2', 200.00 , 'Rental');
+INSERT INTO rental(id, datein, dateout, datedue, workordernum, remindersent) VALUES ('revsource2', '2001-05-08 15:20:01', '2001-05-10 15:20:01', '2001-05-08 15:20:01', 1232121, FALSE);
+
+--ForRent table;
+CREATE TABLE forrent(
+id            VARCHAR(40) PRIMARY KEY REFERENCES PProduct(id),
+timesrented   INTEGER
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('prod4', 'edu.byu.isys414.jmcmurdi.IntexII.ForRent');
+INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod4', 150.00, 'camera', 4, 'rental');
+INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod4', 'tk427', '2012-01-08 13:40:01', 80.59, .025, 'prod1', 'store1', 'Panasonic rental-3204928');
+INSERT INTO forrent(id, timesrented) VALUES ('prod4', 5);
+
+--ForSale table;
+
+CREATE TABLE forsale(
+id            VARCHAR(40) PRIMARY KEY REFERENCES PProduct(id),
+usedstatus    VARCHAR(50)
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('prod2', 'edu.byu.isys414.jmcmurdi.IntexII.PProduct');
+INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod2', 150.00, 'camera', 2, 'pproduct');
+INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409');
+INSERT INTO forsale(id, usedstatus) VALUES ('prod2', 'New');
+
+--Conceptual Rental table;
+
+CREATE TABLE conceptualrental(
+id            VARCHAR(40) PRIMARY KEY REFERENCES cproduct(id),
+priceperday   NUMERIC(8,2) DEFAULT 0,
+replacementprice NUMERIC(8,2) DEFAULT 0
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('prod6','edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
+INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod6', 5.00, 'crental', 6, 'memory cards');
+INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod6', '8gb Samsung SD cards', '8gb Samsung SD cards', .025);
+INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod6', 2.00 , 25.00);
 
 --transaction TABLE;
 CREATE TABLE transaction(
