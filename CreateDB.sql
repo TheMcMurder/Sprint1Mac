@@ -279,7 +279,7 @@ timesrented   INTEGER
 
 INSERT INTO businessobject(id, botype) VALUES ('prod4', 'edu.byu.isys414.jmcmurdi.IntexII.ForRent');
 INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod4', 150.00, 'camera', 4, 'rental');
-INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod4', 'tk427', '2012-01-08 13:40:01', 80.59, .025, 'prod1', 'store1', 'Panasonic rental-3204928');
+INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname, status) VALUES ('prod4', 'tk427', '2012-01-08 13:40:01', 80.59, .025, 'prod1', 'store1', 'Panasonic rental-3204928', 'available');
 INSERT INTO forrent(id, timesrented) VALUES ('prod4', 5);
 
 --ForSale table;
@@ -289,9 +289,9 @@ id            VARCHAR(40) PRIMARY KEY REFERENCES PProduct(id),
 usedstatus    VARCHAR(50)
 );
 
-INSERT INTO businessobject(id, botype) VALUES ('prod2', 'edu.byu.isys414.jmcmurdi.IntexII.PProduct');
+INSERT INTO businessobject(id, botype) VALUES ('prod2', 'edu.byu.isys414.jmcmurdi.IntexII.ForSale');
 INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod2', 150.00, 'camera', 2, 'pproduct');
-INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409');
+INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname, status) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409', 'available');
 INSERT INTO forsale(id, usedstatus) VALUES ('prod2', 'New');
 
 --Conceptual Rental table;

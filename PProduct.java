@@ -33,6 +33,7 @@ public class PProduct extends Product {
 	private String storeid = null;
 	@BusinessObjectField
 	private String ppname = null;
+
 	
 	
 	/** Creates a new instance of this object */
