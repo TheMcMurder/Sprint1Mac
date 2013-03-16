@@ -23,6 +23,9 @@ public class Rental extends RevSource{
 	@BusinessObjectField
 	private String forRentid= null;
 	
+	@BusinessObjectField
+	private int numDays = 0;
+	
 
 	
 	//Date in - Date out
@@ -142,6 +145,19 @@ public class Rental extends RevSource{
 
 	public void setForRentid(String forRentid) {
 		this.forRentid = forRentid;
+		setDirty();
+	}
+
+
+
+	public int getNumDays() {
+		return numDays;
+	}
+
+
+
+	public void setNumDays(int numDays) {
+		this.numDays = numDays;
 		setDirty();
 	}
 }

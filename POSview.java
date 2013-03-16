@@ -94,8 +94,9 @@ public class POSview {
 	public Store store = null;
 	private Table table;
 	private double totalcosttocust = 0;
-	private ArrayList<Sale> salelist = null;
+	private ArrayList<RevSource> salelist = null;
 	private Commission comm;
+	private Rental therental;
 
 	// private Table table;
 	private TableViewer prodTable;
@@ -542,44 +543,76 @@ public class POSview {
 		tblclmnPrice.setWidth(100);
 		tblclmnPrice.setText("Price");
 
-		tcProduct.setLabelProvider(new ColumnLabelProvider() {
-			public String getText(Object element) {
-				Sale sale1 = (Sale) element;
-				CProduct cprod1;
-				PProduct pprod1;
-				try {
-					cprod1 = BusinessObjectDAO.getInstance().read(sale1.getProdid());
-					if (cprod != null) {
-
-						return cprod1.getProdName();
+		tcProduct.setLabelProvider(new ColumnLabelProvider(){
+			public String getText(Object element){
+				RevSource rs1 = (RevSource) element;
+				if (rs1.getRevtype().equals("Sale")){
+					Sale sale1 = (Sale) element;
+					Product prod1;
+					try {
+						prod1 = BusinessObjectDAO.getInstance().read(sale1.getProdid());
+						return prod1.getName();
+					} catch (DataException e) {
+						e.printStackTrace();
 					}
-					pprod1 = BusinessObjectDAO.getInstance().read(sale1.getProdid());
-					if (pprod != null) {
-						return pprod1.getSerialnum();
+				}else if(rs1.getRevtype().equals("Rental")){
+					Rental rent1 = (Rental) element;
+					Product prod1;
+					try {
+						prod1 = BusinessObjectDAO.getInstance().read(rent1.getForRentid());
+						return prod1.getName();
+					} catch (DataException e) {
+						e.printStackTrace();
 					}
-				} catch (DataException e) {
-					e.printStackTrace();
 				}
 				return null;
-			}
-		});
-		tcQuantity.setLabelProvider(new ColumnLabelProvider() {
-			public String getText(Object element) {
-				Sale sale1 = (Sale) element;
-				DecimalFormat df = new DecimalFormat("###");
-				return df.format(sale1.getQuantity()) + "";
-			}
+			}	
 		});
 
-		tcPrice.setLabelProvider(new ColumnLabelProvider() {
-			public String getText(Object element) {
-				Sale sale1 = (Sale) element;
-				DecimalFormat df = new DecimalFormat("###.##");
-				df.setMinimumFractionDigits(2);
-				return df.format(sale1.getChargeamount()) + "";
+		tcQuantity.setLabelProvider(new ColumnLabelProvider(){
+			public String getText(Object element){
+				RevSource rs1 = (RevSource) element;
+				if (rs1.getRevtype().equals("Sale")){
+					Sale sale1 = (Sale) element;
+					DecimalFormat df = new DecimalFormat("###");
+					return df.format(sale1.getQuantity())+"";
+				}else if(rs1.getRevtype().equals("Rental")){
+					Rental rent1 = (Rental) element;
+					DecimalFormat df = new DecimalFormat("###");
+					return df.format(rent1.getNumDays())+"";
+				}
+				return "error";
+//				
+//				Sale sale1 = (Sale) element;
+//				DecimalFormat df = new DecimalFormat("###");
+//				return df.format(sale1.getQuantity())+"";
+			}	
+		});
+		
+		tcPrice.setLabelProvider(new ColumnLabelProvider(){
+			public String getText(Object element){
+				
+				RevSource rs1 = (RevSource) element;
+				if (rs1.getRevtype().equals("Sale")){
+					Sale sale1 = (Sale) element;
+					DecimalFormat df = new DecimalFormat("###.##");
+					df.setMinimumFractionDigits(2);
+					return df.format(sale1.getChargeamount())+"";
+				}else if(rs1.getRevtype().equals("Rental")){
+					Rental rent1 = (Rental) element;
+					DecimalFormat df = new DecimalFormat("###.##");
+					df.setMinimumFractionDigits(2);
+					return df.format(rent1.getChargeamount())+"";
+				}
+				return "error";
+				
+				
+//				Sale sale1 = (Sale) element;
+//				DecimalFormat df = new DecimalFormat("###.##");
+//				df.setMinimumFractionDigits(2);
+//				return df.format(sale1.getChargeamt())+"";
 			}
 		});
-
 		prodTable.setContentProvider(new ArrayContentProvider());
 
 		// m_bindingContext = initDataBindings();
@@ -602,6 +635,9 @@ public class POSview {
 		if (cust != null){
 		String custstring = cust.getFirstName() +  " " +cust.getLastName();
 		checkoutrental(p, custstring);
+		
+		//temprental =  
+		
 		}
 		//end doesn't belong code
 	}
@@ -611,6 +647,43 @@ public class POSview {
 	private void checkoutrental(Product p, String custstring){
 		RentalPrompt rentprompt = new RentalPrompt(shlPosView, 0, p, custstring);
 		rentprompt.open();
+		Rental temprental = null;
+
+		temprental = rentprompt.getRental();
+		if(temprental != null){
+//			System.out.println("Rental testing (POSView): ");
+//			System.out.println("Rental Id: " + temprental.getId());
+//			System.out.println("Rental Date Out: " + temprental.getDateOut());
+//			System.out.println("Rental Date Due: " + temprental.getDateDue());
+//			System.out.println("Rental Date in: " + temprental.getDateIn());
+//			System.out.println("Reminder Sent: " + temprental.isReminderSent());
+//			System.out.println("Workorder #: " + temprental.getWorkOrderNum());
+//			System.out.println("ForRentID: " + temprental.getForRentid());
+//			//salelist.add(rental);
+			
+			
+			//Add it here
+			temprental.setRevtype("Rental");
+			temprental.setChargeamount(rentprompt.getCost());
+			trans.addRevSource(temprental);
+			
+			trans.setStoreid(store.getId());
+			Date today = new Date();
+
+			String now = SDF.format(today);
+			try {
+				today = (SDF.parse(now));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			trans.setTransdate(today);
+			// trans.setRevid(//revid)
+			additemtolist();
+			refreshpricevalues();
+			//end add
+			
+		}
+		
 	}
 	
 	/**
@@ -769,24 +842,9 @@ public class POSview {
 		// System.out.println("Itemq: " + itemquantity);
 		if (pprod != null) {
 			try {
-				Sale tempsale = BusinessObjectDAO.getInstance().create("Sale");
-				// System.out.println("PPROD!!!!!");
-				tempsale.setProdid(pprod.getId());
-				tempsale.setQuantity(itemquantity);
-				tempsale.setStoreid(store.getId());
-				tempsale.setRevtype("Sale");
-				tempsale.setChargeamount(pprod.getProdPrice() * itemquantity);
-				trans.addRevSource(tempsale);
-				salelist = new ArrayList<Sale>();
-				salelist.add(tempsale);
-				salelist.add(tempsale);
-				tempsale.save();
-				trans.setComtotal(pprod.getPprodcomrate() * pprod.getCost() * itemquantity);
-
-				additemtolist();
-				refreshpricevalues();
+				//RUN HERE IT"S TOTALLY SAFE
 				sale = null;
-			} catch (DataException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 

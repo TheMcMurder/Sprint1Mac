@@ -276,6 +276,7 @@ dateout       DATE DEFAULT NULL,
 datedue       DATE DEFAULT NULL,
 workordernum  INTEGER NOT NULL DEFAULT 0,
 forrentid     VARCHAR(40) REFERENCES forrent(id),
+numdays       INTEGER NOT NULL DEFAULT 0,
 remindersent  BOOLEAN
 );
 

@@ -41,6 +41,8 @@ public class RentalPrompt extends Dialog {
 	private Spinner spinner;
 	private Rental rental = null;
 	SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
+	private double cost;
+	private double CostperDay;
 
 	
 
@@ -244,9 +246,9 @@ public class RentalPrompt extends Dialog {
 			CProduct tempcprod = BusinessObjectDAO.getInstance().searchForBO("CProduct", new SearchCriteria("id", pprod.getCprodid()));
 			ConceptualRental crental = BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", tempcprod.getId()));
 			if (crental != null){
-				Double CostperDay = crental.getPricePerDay();
+				CostperDay = crental.getPricePerDay();
 				Double dayswanted = (double)spinner.getSelection();
-				Double cost = CostperDay * dayswanted;
+				cost = CostperDay * dayswanted;
 				txtcost.setText(cost +"");
 			ppd.setText(CostperDay + "");
 			}
@@ -273,6 +275,21 @@ public class RentalPrompt extends Dialog {
 			Random randomGenerator = new Random();
 			int randomnum = randomGenerator.nextInt(1000000000);
 			rental.setWorkOrderNum(randomnum);
+			rental.setForRentid(pprod.getId());
+			rental.setNumDays(spinner.getSelection());
+			
+			
+//			System.out.println("Rental testing (prompt): ");
+//			System.out.println("Rental Id: " + rental.getId());
+//			System.out.println("Rental Date Out: " + rental.getDateOut());
+//			System.out.println("Rental Date Due: " + rental.getDateDue());
+//			System.out.println("Rental Date in: " + rental.getDateIn());
+//			System.out.println("Reminder Sent: " + rental.isReminderSent());
+//			System.out.println("Workorder #: " + rental.getWorkOrderNum());
+//			System.out.println("ForRentID: " + rental.getForRentid());
+			
+			
+			shell.dispose();
 			
 
 			
@@ -282,6 +299,30 @@ public class RentalPrompt extends Dialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Rental getRental() {
+		return rental;
+	}
+
+	public void setRental(Rental rental) {
+		this.rental = rental;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public double getCostperDay() {
+		return CostperDay;
+	}
+
+	public void setCostperDay(double costperDay) {
+		CostperDay = costperDay;
 	}
 }
 
