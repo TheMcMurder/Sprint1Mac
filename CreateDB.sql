@@ -220,7 +220,7 @@ INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.0
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
 
 INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
-INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod5', 5.00, 'cproduct', 5, 'Panasonic Vierra');
+INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod5', 800.00, 'cproduct', 5, 'Panasonic Vierra');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod5', 'Panasonic Vierra', 'Panasonic TV', .025);
 
 --physical product table;
@@ -252,6 +252,9 @@ INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES
 
 INSERT INTO businessobject (id, botype) VALUES ('storeprod2', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
 INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod2', 'store1', 'prod3', 7, 'Lobby in bin');
+
+INSERT INTO businessobject(id, botype) VALUES ('storeprod3', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
+INSERT INTO storeprod(id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod3', 'store1', 'prod5', 3, 'behind the counter');
 
 --Rental table;
 CREATE TABLE rental(
