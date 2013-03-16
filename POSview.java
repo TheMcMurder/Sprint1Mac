@@ -50,7 +50,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import com.ibm.icu.text.DecimalFormat;
 
 public class POSview {
-	////private DataBindingContext m_bindingContext;
+	// //private DataBindingContext m_bindingContext;
 	// for comparing dates
 	SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -94,7 +94,8 @@ public class POSview {
 	public Store store = null;
 	private Table table;
 	private double totalcosttocust = 0;
-	private ArrayList <Sale> salelist = null;
+	private ArrayList<Sale> salelist = null;
+	private Commission comm;
 
 	// private Table table;
 	private TableViewer prodTable;
@@ -115,18 +116,18 @@ public class POSview {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
-//			public void run() {
-//				Display display = Display.getDefault();
-//
-//				try {
-//					POSview window = new POSview();
-//					window.open();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			});
-		//});
+		// Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
+		// public void run() {
+		// Display display = Display.getDefault();
+		//
+		// try {
+		// POSview window = new POSview();
+		// window.open();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// });
+		// });
 	}
 
 	/**
@@ -150,12 +151,10 @@ public class POSview {
 
 	private void testsetEmployee() {
 		try {
-			this.emp = BusinessObjectDAO.getInstance().searchForBO("Employee",
-					new SearchCriteria("username", "jmcmurdi"));
+			this.emp = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", "jmcmurdi"));
 			this.trans = BusinessObjectDAO.getInstance().create("Transaction");
 			this.sale = BusinessObjectDAO.getInstance().create("Sale");
-			this.store = BusinessObjectDAO.getInstance().searchForBO("Store",
-					new SearchCriteria("id", emp.getAssignedStore()));
+			this.store = BusinessObjectDAO.getInstance().searchForBO("Store", new SearchCriteria("id", emp.getAssignedStore()));
 			trans.setEmpid(emp.getId());
 		} catch (DataException e) {
 
@@ -165,12 +164,10 @@ public class POSview {
 
 	private void setEmployee(String empid) {
 		try {
-			this.emp = BusinessObjectDAO.getInstance().searchForBO("Employee",
-					new SearchCriteria("username", empid));
+			this.emp = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", empid));
 			this.trans = BusinessObjectDAO.getInstance().create("Transaction");
 			this.sale = BusinessObjectDAO.getInstance().create("Sale");
-			this.store = BusinessObjectDAO.getInstance().searchForBO("Store",
-					new SearchCriteria("id", emp.getAssignedStore()));
+			this.store = BusinessObjectDAO.getInstance().searchForBO("Store", new SearchCriteria("id", emp.getAssignedStore()));
 			trans.setEmpid(emp.getId());
 			// System.out.println(emp.getFirstname());
 		} catch (DataException e) {
@@ -190,8 +187,7 @@ public class POSview {
 
 		shlPosView = new Shell();
 		shlPosView.setTouchEnabled(true);
-		shlPosView.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		shlPosView.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		shlPosView.setSize(986, 698);
 		shlPosView.setText("POS view");
 		shlPosView.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -318,8 +314,7 @@ public class POSview {
 			}
 
 		});
-		btnNewCust
-				.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnNewCust.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnNewCust.setText("New Customer");
 
 		Composite composite_10 = new Composite(composite_3, SWT.NONE);
@@ -332,8 +327,7 @@ public class POSview {
 			}
 
 		});
-		btnFindCust.setFont(SWTResourceManager
-				.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnFindCust.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnFindCust.setText("Find Customer");
 
 		Composite composite_15 = new Composite(EmpControls, SWT.NONE);
@@ -357,15 +351,13 @@ public class POSview {
 				lookupProduct();
 			}
 		});
-		btnItemLookup.setFont(SWTResourceManager.getFont("Ubuntu", 13,
-				SWT.NORMAL));
+		btnItemLookup.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnItemLookup.setText("Item Lookup");
 
 		Composite composite_11 = new Composite(composite_5, SWT.NONE);
 
 		Button btnEditItem = new Button(composite_5, SWT.NONE);
-		btnEditItem.setFont(SWTResourceManager
-				.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnEditItem.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnEditItem.setText("Edit Item");
 
 		Composite composite_16 = new Composite(EmpControls, SWT.NONE);
@@ -383,8 +375,7 @@ public class POSview {
 		composite_8.setLayoutData(new RowData(425, 110));
 
 		Button btnEditCust = new Button(composite_8, SWT.NONE);
-		btnEditCust.setFont(SWTResourceManager
-				.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnEditCust.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnEditCust.setText("Edit Customer");
 
 		Composite composite_13 = new Composite(composite_8, SWT.NONE);
@@ -396,8 +387,7 @@ public class POSview {
 				checkoutclicked();
 			}
 		});
-		btnCheckout.setFont(SWTResourceManager
-				.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnCheckout.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnCheckout.setText("Checkout");
 
 		Composite composite_19 = new Composite(EmpControls, SWT.NONE);
@@ -429,8 +419,7 @@ public class POSview {
 		Composite composite_12 = new Composite(composite_9, SWT.NONE);
 
 		Button btnManLogin = new Button(composite_9, SWT.NONE);
-		btnManLogin.setFont(SWTResourceManager
-				.getFont("Ubuntu", 13, SWT.NORMAL));
+		btnManLogin.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnManLogin.setText("Manager Login");
 
 		Composite composite_21 = new Composite(EmpControls, SWT.NONE);
@@ -444,74 +433,58 @@ public class POSview {
 		composite.setLayout(new GridLayout(3, false));
 
 		Label lblTeamMember = new Label(composite, SWT.NONE);
-		lblTeamMember.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 2, 1));
-		lblTeamMember.setFont(SWTResourceManager.getFont("Ubuntu", 15,
-				SWT.NORMAL));
+		lblTeamMember.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		lblTeamMember.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
 		lblTeamMember.setText("Team Member: ");
 
 		EmpName = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
 		EmpName.setEditable(false);
-		EmpName.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
-		GridData gd_EmpName = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-				1, 1);
+		EmpName.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		GridData gd_EmpName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_EmpName.widthHint = 320;
 		EmpName.setLayoutData(gd_EmpName);
 		EmpName.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
 
 		Label lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setFont(SWTResourceManager
-				.getFont("Ubuntu", 15, SWT.NORMAL));
+		lblNewLabel.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
 		lblNewLabel.setText("Welcome");
 		new Label(composite, SWT.NONE);
 
 		CustomerName = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-		CustomerName.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		CustomerName.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		CustomerName.setEditable(false);
-		GridData gd_CustomerName = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
+		GridData gd_CustomerName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_CustomerName.widthHint = 321;
 		CustomerName.setLayoutData(gd_CustomerName);
-		CustomerName.setFont(SWTResourceManager.getFont("Ubuntu", 15,
-				SWT.NORMAL));
+		CustomerName.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
 
 		Composite composite_1 = new Composite(CartInfo, SWT.NONE);
-		composite_1.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
+		composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		composite_1.setLayoutData(BorderLayout.SOUTH);
 		composite_1.setLayout(new GridLayout(3, false));
 
 		Label lblSubtotal = new Label(composite_1, SWT.NONE);
-		lblSubtotal.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
+		lblSubtotal.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		lblSubtotal.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblSubtotal.setAlignment(SWT.CENTER);
-		GridData gd_lblSubtotal = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 2, 1);
+		GridData gd_lblSubtotal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_lblSubtotal.widthHint = 264;
 		lblSubtotal.setLayoutData(gd_lblSubtotal);
-		lblSubtotal.setFont(SWTResourceManager
-				.getFont("Ubuntu", 15, SWT.NORMAL));
+		lblSubtotal.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
 		lblSubtotal.setText("SubTotal");
 
 		Subtotal = new Text(composite_1, SWT.BORDER);
-		Subtotal.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		Subtotal.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		Subtotal.setEditable(false);
-		GridData gd_Subtotal = new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1);
+		GridData gd_Subtotal = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_Subtotal.heightHint = 34;
 		Subtotal.setLayoutData(gd_Subtotal);
 
 		Label lblTax = new Label(composite_1, SWT.NONE);
 		lblTax.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		lblTax.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
+		lblTax.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		lblTax.setAlignment(SWT.CENTER);
-		GridData gd_lblTax = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-				1, 1);
+		GridData gd_lblTax = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_lblTax.widthHint = 270;
 		lblTax.setLayoutData(gd_lblTax);
 		lblTax.setFont(SWTResourceManager.getFont("Ubuntu", 15, SWT.NORMAL));
@@ -519,8 +492,7 @@ public class POSview {
 		new Label(composite_1, SWT.NONE);
 
 		Tax = new Text(composite_1, SWT.BORDER);
-		Tax.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		Tax.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		Tax.setEditable(false);
 		GridData gd_Tax = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_Tax.heightHint = 32;
@@ -528,10 +500,8 @@ public class POSview {
 
 		Label lblTotal = new Label(composite_1, SWT.NONE);
 		lblTotal.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		lblTotal.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
-		GridData gd_lblTotal = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-				1, 1);
+		lblTotal.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
+		GridData gd_lblTotal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_lblTotal.widthHint = 270;
 		lblTotal.setLayoutData(gd_lblTotal);
 		lblTotal.setAlignment(SWT.CENTER);
@@ -540,16 +510,13 @@ public class POSview {
 		new Label(composite_1, SWT.NONE);
 
 		Total = new Text(composite_1, SWT.BORDER);
-		Total.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
+		Total.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
 		Total.setEditable(false);
-		GridData gd_Total = new GridData(SWT.FILL, SWT.CENTER, true, false, 1,
-				1);
+		GridData gd_Total = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_Total.heightHint = 32;
 		Total.setLayoutData(gd_Total);
 
-		this.prodTable = new TableViewer(CartInfo, SWT.BORDER
-				| SWT.FULL_SELECTION);
+		this.prodTable = new TableViewer(CartInfo, SWT.BORDER | SWT.FULL_SELECTION);
 		table = prodTable.getTable();
 		table.setHeaderVisible(true);
 		table.setLayoutData(BorderLayout.CENTER);
@@ -575,14 +542,12 @@ public class POSview {
 				CProduct cprod1;
 				PProduct pprod1;
 				try {
-					cprod1 = BusinessObjectDAO.getInstance().read(
-							sale1.getprodid());
+					cprod1 = BusinessObjectDAO.getInstance().read(sale1.getProdid());
 					if (cprod != null) {
 
 						return cprod1.getProdName();
 					}
-					pprod1 = BusinessObjectDAO.getInstance().read(
-							sale1.getprodid());
+					pprod1 = BusinessObjectDAO.getInstance().read(sale1.getProdid());
 					if (pprod != null) {
 						return pprod1.getSerialnum();
 					}
@@ -596,7 +561,7 @@ public class POSview {
 			public String getText(Object element) {
 				Sale sale1 = (Sale) element;
 				DecimalFormat df = new DecimalFormat("###");
-				return df.format(sale1.getquantity()) + "";
+				return df.format(sale1.getQuantity()) + "";
 			}
 		});
 
@@ -627,8 +592,7 @@ public class POSview {
 	}
 
 	/**
-	 * Finds the customer from the database (or cache) and sets the customer
-	 * object
+	 * Finds the customer from the database (or cache) and sets the customer object
 	 */
 	private void findcustclicked() {
 		FindCust findcust = new FindCust(shlPosView, 0);
@@ -648,8 +612,7 @@ public class POSview {
 	private void populateCust() {
 
 		if (cust != null) {
-			CustomerName
-					.setText(cust.getFirstName() + " " + cust.getLastName());
+			CustomerName.setText(cust.getFirstName() + " " + cust.getLastName());
 			trans.setCustomerid(cust.getId());
 		} else {
 			errormessage("Error finding Customer Object");
@@ -657,7 +620,6 @@ public class POSview {
 	}
 
 	private void checkoutclicked() {
-		// TODO Auto-generated method stub
 		Checkout checkout = new Checkout(shlPosView, 0, totalcosttocust);
 		checkout.open();
 		Boolean condition = checkout.isSuccessful();
@@ -670,14 +632,12 @@ public class POSview {
 				today = SDF.parse(now);
 
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
 			try {
 				// System.out.println("DLSKJFLSDJFSLDJ");
-				Commission comm = BusinessObjectDAO.getInstance().create(
-						"Commission");
+				comm = BusinessObjectDAO.getInstance().create("Commission");
 				comm.setComdate(today);
 				comm.setEmpid(emp.getId());
 				comm.setAmount(trans.getComtotal());
@@ -687,14 +647,12 @@ public class POSview {
 				e2.printStackTrace();
 			}
 			try {
-				JournalEntry je = BusinessObjectDAO.getInstance().create(
-						"JournalEntry");
+				JournalEntry je = BusinessObjectDAO.getInstance().create("JournalEntry");
 				je.setTransdate(today);
 
 				je.save();
-				for (int i = 0; i < 5; i++) {
-					DebitCredit dc = BusinessObjectDAO.getInstance().create(
-							"DebitCredit");
+				for (int i = 0; i < 6; i++) {
+					DebitCredit dc = BusinessObjectDAO.getInstance().create("DebitCredit");
 					if (i == 0) {
 						dc.setAmount(trans.getTotal());
 						dc.setGlName("Cash");
@@ -725,23 +683,41 @@ public class POSview {
 						dc.setIsDebit(false);
 						dc.setJournalEntryid(je.getId());
 						dc.save();
+					} else if (i == 5) {
+						dc.setAmount(trans.getSubtotal());
+						dc.setGlName("Inventory");
+						dc.setIsDebit((false));
+						dc.setJournalEntryid(je.getId());
+						dc.save();
 					}
-					trans.save();
-					
+					// TODO
 
 					// System.out.println(now);
 					try {
 						today = SDF.parse(now);
 						je.setTransdate(today);
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
 				}
+				for (RevSource rs : trans.getRevsources()) {
+					rs.setTransid(trans.getId());
+					rs.save();
+				}
+				Payment p = BusinessObjectDAO.getInstance().create("Payment");
+				p.setPayamount(checkout.getAmountpaid());
+				p.setPaychange(checkout.getChangeamount());
+				p.setType("cash");
+				p.save();
+				trans.setPaymentid(p.getId());
+				trans.setJournalentryid(je.getId());
+				//System.out.println(comm.getId().length());
+				trans.setCommid(comm.getId());
+				//System.out.println(trans.getCommid().length());
+				trans.save();
 
 			} catch (DataException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -762,24 +738,22 @@ public class POSview {
 			try {
 				Sale tempsale = BusinessObjectDAO.getInstance().create("Sale");
 				// System.out.println("PPROD!!!!!");
-				tempsale.setprodid(pprod.getId());
-				tempsale.setquantity(itemquantity);
-				tempsale.setstoreid(store.getId());
+				tempsale.setProdid(pprod.getId());
+				tempsale.setQuantity(itemquantity);
+				tempsale.setStoreid(store.getId());
 				tempsale.setRevtype("Sale");
 				tempsale.setChargeamount(pprod.getProdPrice() * itemquantity);
 				trans.addRevSource(tempsale);
-				salelist = new ArrayList <Sale>();
+				salelist = new ArrayList<Sale>();
 				salelist.add(tempsale);
 				salelist.add(tempsale);
 				tempsale.save();
-				trans.setComtotal(pprod.getPprodcomrate() * pprod.getCost()
-						* itemquantity);
+				trans.setComtotal(pprod.getPprodcomrate() * pprod.getCost() * itemquantity);
 
 				additemtolist();
 				refreshpricevalues();
 				sale = null;
 			} catch (DataException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -791,14 +765,14 @@ public class POSview {
 			try {
 				tempsale = BusinessObjectDAO.getInstance().create("Sale");
 
-				tempsale.setprodid(cprod.getId());
-				tempsale.setquantity(itemquantity);
+				tempsale.setProdid(cprod.getId());
+				tempsale.setQuantity(itemquantity);
 				tempsale.setChargeamount(cprod.getProdPrice() * itemquantity);
-				this.sale.setstoreid(store.getId());
+				this.sale.setStoreid(store.getId());
 				tempsale.setRevtype("Sale");
+				tempsale.setStoreid(store.getId());
 				trans.addRevSource(tempsale);
-				trans.setComtotal(cprod.getCprodComRate()
-						* cprod.getProdPrice() * itemquantity);
+				trans.setComtotal(cprod.getCprodComRate() * cprod.getProdPrice() * itemquantity);
 				trans.setStoreid(store.getId());
 				Date today = new Date();
 
@@ -806,7 +780,6 @@ public class POSview {
 				try {
 					today = (SDF.parse(now));
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				trans.setTransdate(today);
@@ -814,7 +787,6 @@ public class POSview {
 				additemtolist();
 				refreshpricevalues();
 			} catch (DataException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// this.sale.set
@@ -859,9 +831,7 @@ public class POSview {
 	}
 
 	/**
-	 * This method will disable the whole UI and open a login window. This way
-	 * the data is still loading and creating objects while the user is logging
-	 * in.
+	 * This method will disable the whole UI and open a login window. This way the data is still loading and creating objects while the user is logging in.
 	 */
 	private void loginopen() {
 		// making all composites invisible to allow for login credentials
@@ -872,27 +842,26 @@ public class POSview {
 		CustomerName.setText("");
 
 		// delete this when you go live
-//		//
-//		testsetEmployee();
-//		enableall();
-//		EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
-//		trans.setEmpid(emp.getId());
+		// //
+		// testsetEmployee();
+		// enableall();
+		// EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
+		// trans.setEmpid(emp.getId());
 
-		 //uncomment this when you go live
-		 logwin.open();
-		 boolean tempbool = logwin.isSuccessful();
-		 String empid = logwin.getUsername();
-		 if(tempbool){
-		 enableall();
-		
-		 setEmployee(empid);
-		 //System.out.println("");
-		 EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
-		 enablemenu();
-		 }
-		 else{
-		 shlPosView.dispose();
-		 }
+		// uncomment this when you go live
+		logwin.open();
+		boolean tempbool = logwin.isSuccessful();
+		String empid = logwin.getUsername();
+		if (tempbool) {
+			enableall();
+
+			setEmployee(empid);
+			// System.out.println("");
+			EmpName.setText(emp.getFirstname() + " " + emp.getLastname());
+			enablemenu();
+		} else {
+			shlPosView.dispose();
+		}
 	}
 
 	private void refreshpricevalues() {

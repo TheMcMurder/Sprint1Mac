@@ -24,6 +24,7 @@ public class Checkout extends Dialog {
 	private Text text;
 	private Text paid;
 	private Text change;
+	private double amountpaid;
 	private double total;
 	private boolean successful;
 	private double changeamount;
@@ -179,7 +180,7 @@ public class Checkout extends Dialog {
 	private void calculatechange() {
 		// TODO Auto-generated method stub
 		try{
-			Double amountpaid = Double.parseDouble(paid.getText());
+			amountpaid = Double.parseDouble(paid.getText());
 			changeamount = amountpaid - total;
 			
 			this.change.setText(changeamount + "");
@@ -222,6 +223,22 @@ public class Checkout extends Dialog {
 	 */
 	public void setChangeamount(double changeamount) {
 		this.changeamount = changeamount;
+	}
+
+	public Text getPaid() {
+		return paid;
+	}
+
+	public void setPaid(Text paid) {
+		this.paid = paid;
+	}
+
+	public double getAmountpaid() {
+		return amountpaid;
+	}
+
+	public void setAmountpaid(double amountpaid) {
+		this.amountpaid = amountpaid;
 	}
 
 }

@@ -25,6 +25,8 @@ revtype       VARCHAR(250)
 	private double chargeamount = 0;
 	@BusinessObjectField
 	private String revtype = null;
+	@BusinessObjectField
+	private String transid = null;
 	
 	/** Creates a new instance of this object */
 	public RevSource(String id) {
@@ -61,8 +63,13 @@ revtype       VARCHAR(250)
 		setDirty();
 	}
 
-	
+	public String getTransid() {
+		return transid;
+	}
 
-
+	public void setTransid(String transid) {
+		this.transid = transid;
+		setDirty();
+	}
 
 }

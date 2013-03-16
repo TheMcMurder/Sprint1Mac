@@ -27,14 +27,14 @@ public class Sale extends RevSource {
 	/**
 	 * @return the quantity
 	 */
-	public int getquantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
 	/**
 	 * @param quantity the quantity to set
 	 */
-	public void setquantity(int quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 		setDirty();
 	}
@@ -42,28 +42,28 @@ public class Sale extends RevSource {
 	/**
 	 * @return the storeid
 	 */
-	public String getstoreid() {
+	public String getStoreid() {
 		return storeid;
 	}
 
 	/**
 	 * @param storeid the storeid to set
 	 */
-	public void setstoreid(String storeid) {
+	public void setStoreid(String storeid) {
 		this.storeid = storeid;
 		setDirty();
 	}
 	/**
 	 * @return the prodid
 	 */
-	public String getprodid() {
+	public String getProdid() {
 		return prodid;
 	}
 
 	/**
 	 * @param prodid the prodid to set
 	 */
-	public void setprodid(String prodid) {
+	public void setProdid(String prodid) {
 		this.prodid = prodid;
 		setDirty();
 	}

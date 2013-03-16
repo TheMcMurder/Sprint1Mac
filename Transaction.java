@@ -24,8 +24,6 @@ public class Transaction extends BusinessObject {
 	@BusinessObjectField
 	private String commid = null;
 	@BusinessObjectField
-	private String revid = null;
-	@BusinessObjectField
 	private String empid = null;
 	@BusinessObjectField
 	private String storeid = null;
@@ -131,33 +129,9 @@ public class Transaction extends BusinessObject {
 	 * @param commid the commid to set
 	 */
 	public void setCommid(String commid) {
-		this.commid += commid;
+		this.commid = commid;
 		setDirty();
 	}
-
-
-
-
-	/**
-	 * @return the revid
-	 */
-	public String getRevid() {
-		return revid;
-	}
-
-
-
-
-	/**
-	 * @param revid the revid to set
-	 */
-	public void setRevid(String revid) {
-		this.revid = revid;
-		setDirty();
-	}
-
-
-
 
 	/**
 	 * @return the empid

@@ -43,7 +43,7 @@ public class Tester {
 		c.setJournalentryid("Phycology 1510");
 		c.setCustomerid("NO ID FOR YOU");
 		c.setCommid("We don't share");
-		c.setRevid("Resistance is futile");
+		//c.setRevid("Resistance is futile");
 		c.setEmpid("The employee died");
 		c.setStoreid("The store burned down");
 		c.setTransdate(SDF.parse("1990-12-15"));
@@ -81,7 +81,7 @@ public class Tester {
 	
 	}
 
-	@Test
+	//@Test
 	public void TestStoreProd() throws Exception{
 		StoreProd c = BusinessObjectDAO.getInstance().create("StoreProd", "storeprodtempitem1");
 		
@@ -161,12 +161,14 @@ public class Tester {
 	
 	}
 
-	//@Test
+
+	@Test
 	public void TestRevSource() throws Exception{
 		RevSource c = BusinessObjectDAO.getInstance().create("RevSource", "RevSourcetempitem1");
 		
 		c.setChargeamount(15);
 		c.setRevtype("something fake");
+		c.setTransid("ppp");
 		c.save();
 
 

@@ -174,6 +174,7 @@ INSERT INTO commission(id, empid, comdate) VALUES ('commission1', 'employee2', '
 CREATE TABLE revsource(
 id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
 chargeamount  NUMERIC(8,2) DEFAULT 0, 
+transid       VARCHAR(40) REFERENCES transaction(id),
 revtype       VARCHAR(250)
 );
 
@@ -313,7 +314,6 @@ paymentid     VARCHAR(40) REFERENCES payment(id),
 journalentryid VARCHAR(40) REFERENCES journalentry(id),
 customerid    VARCHAR(40) REFERENCES customer(id),
 commid        VARCHAR(40) REFERENCES commission(id),
-revid         VARCHAR(40) REFERENCES revsource(id),
 empid         VARCHAR(40) REFERENCES employee(id),
 storeid       VARCHAR(40) REFERENCES store(id),
 transdate     DATE DEFAULT NULL,
@@ -324,4 +324,4 @@ total         NUMERIC(8,2) DEFAULT 0
 );
 
 INSERT INTO businessobject(id, botype) VALUES ('transaction1', 'edu.byu.isys414.jmcmurdi.IntexII.Transaction');
-INSERT INTO transaction(id, paymentid, journalentryid, customerid, commid, revid, empid, storeid, transdate, subtotal, tax, total) VALUES ('transaction1', 'payment1', 'journalentry1', 'customer1', 'commission1', 'revsource1', 'employee2', 'store1', '2012-01-01 13:40:01', 150.00, 9.00, 159.00 );
+INSERT INTO transaction(id, paymentid, journalentryid, customerid, commid, empid, storeid, transdate, subtotal, tax, total) VALUES ('transaction1', 'payment1', 'journalentry1', 'customer1', 'commission1', 'employee2', 'store1', '2012-01-01 13:40:01', 150.00, 9.00, 159.00 );
