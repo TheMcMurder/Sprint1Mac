@@ -220,7 +220,7 @@ priceperday   NUMERIC(8,2) DEFAULT 0,
 replacementprice NUMERIC(8,2) DEFAULT 0
 );
 
-INSERT INTO businessobject(id, botype) VALUES ('prod1','edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
+INSERT INTO businessobject(id, botype) VALUES ('prod1','edu.byu.isys414.jmcmurdi.IntexII.ConceptualRental');
 INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod1', 150.00, 'cproduct', 1, 'camera');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod1', 'Canon Rebel version1', 'test dec', .025);
 INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod1', 35.00 , 500.00);
@@ -230,7 +230,7 @@ INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurd
 INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.00, 'cproduct', 3, 'camera case');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
 
-INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
+INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.ConceptualRental');
 INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod5', 800.00, 'cproduct', 5, 'Panasonic Vierra');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod5', 'Panasonic Vierra', 'Panasonic TV', .025);
 INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod5', 150.00, 1500.00);

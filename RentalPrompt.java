@@ -32,6 +32,7 @@ public class RentalPrompt extends Dialog {
 	private Product p = null;;
 	private String custname = null;
 	private PProduct pprod = null;
+	private Spinner spinner;
 	
 
 	/**
@@ -137,7 +138,13 @@ public class RentalPrompt extends Dialog {
 		Label lblDesiredNumberOf = new Label(composite_2, SWT.NONE);
 		lblDesiredNumberOf.setText("Desired Number of Days:");
 		
-		Spinner spinner = new Spinner(composite_2, SWT.BORDER);
+		this.spinner = new Spinner(composite_2, SWT.BORDER);
+		spinner.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				computecost();
+			}
+		});
 		spinner.setMaximum(10);
 		spinner.setMinimum(1);
 		new Label(composite_2, SWT.NONE);
@@ -189,6 +196,20 @@ public class RentalPrompt extends Dialog {
 		txtcost.setEditable(false);
 		txtcost.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		txtcost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		new Label(composite_2, SWT.NONE);
+		new Label(composite_2, SWT.NONE);
+		new Label(composite_2, SWT.NONE);
+		new Label(composite_2, SWT.NONE);
+		new Label(composite_2, SWT.NONE);
+		
+		Button btnCompute = new Button(composite_2, SWT.NONE);
+		btnCompute.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				computecost();
+			}
+		});
+		btnCompute.setText("compute");
 		setvalues();
 
 	}
@@ -201,16 +222,38 @@ public class RentalPrompt extends Dialog {
 			pprod = BusinessObjectDAO.getInstance().searchForBO("PProduct", new SearchCriteria("id", p.getId()));
 			Itemid.setText(pprod.getName());
 			available.setText(pprod.getStatus());
-//			CProduct tempcprod = BusinessObjectDAO.getInstance().searchForBO("CProduct", new SearchCriteria("id", pprod.getCprodid()));
-//			ConceptualRental crental = BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", tempcprod.getId()));
-//			if (crental != null){
-//				Double CostperDay = crental.getPricePerDay();
-//			
-//			ppd.setText(CostperDay + "");
-//			}
+			CProduct tempcprod = BusinessObjectDAO.getInstance().searchForBO("CProduct", new SearchCriteria("id", pprod.getCprodid()));
+			ConceptualRental crental = BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", tempcprod.getId()));
+			if (crental != null){
+				computecost();
+			//	txtcost.setText(cost +"");
+			//ppd.setText(CostperDay + "");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
+
+	private void computecost() {
+		try {
+			pprod = BusinessObjectDAO.getInstance().searchForBO("PProduct", new SearchCriteria("id", p.getId()));
+			Itemid.setText(pprod.getName());
+			available.setText(pprod.getStatus());
+			CProduct tempcprod = BusinessObjectDAO.getInstance().searchForBO("CProduct", new SearchCriteria("id", pprod.getCprodid()));
+			ConceptualRental crental = BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", tempcprod.getId()));
+			if (crental != null){
+				Double CostperDay = crental.getPricePerDay();
+				Double dayswanted = (double)spinner.getSelection();
+				Double cost = CostperDay * dayswanted;
+				txtcost.setText(cost +"");
+			ppd.setText(CostperDay + "");
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 }
+
+
+
