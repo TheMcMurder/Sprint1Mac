@@ -180,11 +180,11 @@ public class POSview {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		try {
-			CreateDB.main(null);
-		} catch (Exception dbe) {
-			System.out.println("Db creation error");
-		}
+//		try {
+//			CreateDB.main(null);
+//		} catch (Exception dbe) {
+//			System.out.println("Db creation error");
+//		}
 
 		shlPosView = new Shell();
 		shlPosView.setTouchEnabled(true);
@@ -808,6 +808,14 @@ public class POSview {
 
 				}
 				for (RevSource rs : trans.getRevsources()) {
+					if(rs.getRevtype().equals("Rental")){
+						Rental rnt = (Rental) rs;
+						//System.out.println("succes");
+						String id = rnt.getForRentid();
+						PProduct pp = BusinessObjectDAO.getInstance().read(id);
+						pp.setStatus("Rented");
+						pp.save();
+					}
 					rs.setTransid(trans.getId());
 					rs.save();
 				}

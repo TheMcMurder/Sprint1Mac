@@ -277,6 +277,7 @@ public class RentalPrompt extends Dialog {
 			rental.setWorkOrderNum(randomnum);
 			rental.setForRentid(pprod.getId());
 			rental.setNumDays(spinner.getSelection());
+			//pprod.setStatus("Rented");
 			
 			
 //			System.out.println("Rental testing (prompt): ");
