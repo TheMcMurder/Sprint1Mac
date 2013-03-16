@@ -22,20 +22,28 @@ public class RentalPrompt extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
+	private Text Itemid;
+	private Text available;
+	private Text whorenting;
+	private Text ppd;
+	private Text txtcost;
 	private Text txtRemindOurGuests;
+	private int days;
+	private Product p = null;;
+	private String custname = null;
+	private PProduct pprod = null;
+	
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public RentalPrompt(Shell parent, int style) {
+	public RentalPrompt(Shell parent, int style, Product p, String custstring) {
 		super(parent, style);
+		this.p = p;
+		this.custname = custstring;
+		
 		setText("SWT Dialog");
 	}
 
@@ -73,15 +81,19 @@ public class RentalPrompt extends Dialog {
 		lblRentalItem.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblRentalItem.setText("Rental Item:");
 		
-		text = new Text(composite, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Itemid = new Text(composite, SWT.BORDER);
+		Itemid.setEditable(false);
+		Itemid.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		Itemid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblAvailable = new Label(composite, SWT.NONE);
 		lblAvailable.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblAvailable.setText("Available:");
 		
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		available = new Text(composite, SWT.BORDER);
+		available.setEditable(false);
+		available.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		available.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Composite composite_1 = new Composite(shell, SWT.NONE);
 		composite_1.setLayoutData(BorderLayout.SOUTH);
@@ -113,8 +125,10 @@ public class RentalPrompt extends Dialog {
 		lblCustomer.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblCustomer.setText("Customer Renting Item:");
 		
-		text_2 = new Text(composite_2, SWT.BORDER);
-		text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		whorenting = new Text(composite_2, SWT.BORDER);
+		whorenting.setEditable(false);
+		whorenting.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		whorenting.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		new Label(composite_2, SWT.NONE);
 		new Label(composite_2, SWT.NONE);
 		new Label(composite_2, SWT.NONE);
@@ -135,8 +149,10 @@ public class RentalPrompt extends Dialog {
 		lblPricePerDay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPricePerDay.setText("Price Per Day:");
 		
-		text_3 = new Text(composite_2, SWT.BORDER);
-		text_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		ppd = new Text(composite_2, SWT.BORDER);
+		ppd.setEditable(false);
+		ppd.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		ppd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		new Label(composite_2, SWT.NONE);
 		new Label(composite_2, SWT.NONE);
 		new Label(composite_2, SWT.NONE);
@@ -169,11 +185,32 @@ public class RentalPrompt extends Dialog {
 		lblCost.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblCost.setText("Cost:");
 		
-		text_4 = new Text(composite_2, SWT.BORDER);
-		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtcost = new Text(composite_2, SWT.BORDER);
+		txtcost.setEditable(false);
+		txtcost.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+		txtcost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		setvalues();
 
 	}
 	private void cancelclicked(){
 		shell.dispose();
+	}
+	private void setvalues(){
+		whorenting.setText(custname); 
+		try {
+			pprod = BusinessObjectDAO.getInstance().searchForBO("PProduct", new SearchCriteria("id", p.getId()));
+			Itemid.setText(pprod.getName());
+			available.setText(pprod.getStatus());
+//			CProduct tempcprod = BusinessObjectDAO.getInstance().searchForBO("CProduct", new SearchCriteria("id", pprod.getCprodid()));
+//			ConceptualRental crental = BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", tempcprod.getId()));
+//			if (crental != null){
+//				Double CostperDay = crental.getPricePerDay();
+//			
+//			ppd.setText(CostperDay + "");
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

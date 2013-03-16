@@ -357,6 +357,12 @@ public class POSview {
 		Composite composite_11 = new Composite(composite_5, SWT.NONE);
 
 		Button btnEditItem = new Button(composite_5, SWT.NONE);
+		btnEditItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				editItemclicked();
+			}
+		});
 		btnEditItem.setFont(SWTResourceManager.getFont("Ubuntu", 13, SWT.NORMAL));
 		btnEditItem.setText("Edit Item");
 
@@ -579,7 +585,34 @@ public class POSview {
 		// m_bindingContext = initDataBindings();
 
 	}
-
+	
+	/**
+	 * method run when the edit item button is clicked
+	 */
+	private void editItemclicked(){
+		
+		
+		//This is the code for the rental prompt and doesn't really belong here.
+		Product p = null;
+		try {
+			p = BusinessObjectDAO.getInstance().searchForBO("Product", new SearchCriteria("id", "prod4"));
+		} catch (DataException e) {
+			e.printStackTrace();
+		}
+		if (cust != null){
+		String custstring = cust.getFirstName() +  " " +cust.getLastName();
+		checkoutrental(p, custstring);
+		}
+		//end doesn't belong code
+	}
+	/**
+	 * Opens the checkout window and allows for adding a rental object to the transaction
+	 */
+	private void checkoutrental(Product p, String custstring){
+		RentalPrompt rentprompt = new RentalPrompt(shlPosView, 0, p, custstring);
+		rentprompt.open();
+	}
+	
 	/**
 	 * Opens the add Customer Dialog and field checks
 	 */

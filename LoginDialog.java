@@ -137,6 +137,7 @@ public class LoginDialog extends Dialog {
 		new Label(composite_4, SWT.NONE);
 		
 		username = new Text(composite_4, SWT.BORDER);
+		username.setFont(SWTResourceManager.getFont("Lucida Grande", 16, SWT.NORMAL));
 		GridData gd_username = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_username.heightHint = 33;
 		username.setLayoutData(gd_username);
@@ -152,6 +153,7 @@ public class LoginDialog extends Dialog {
 		new Label(composite_4, SWT.NONE);
 		
 		password = new Text(composite_4, SWT.BORDER | SWT.PASSWORD);
+		password.setFont(SWTResourceManager.getFont("Lucida Grande", 16, SWT.NORMAL));
 		password.addTraverseListener(new TraverseListener() {
 			public void keyTraversed(TraverseEvent event) {
 				if (event.detail == SWT.TRAVERSE_RETURN){

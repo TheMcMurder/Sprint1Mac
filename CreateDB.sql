@@ -212,17 +212,28 @@ avgcost       NUMERIC(8,2) DEFAULT 0,
 cprodcomrate  NUMERIC(5,4) DEFAULT 0
 );
 
-INSERT INTO businessobject(id, botype) VALUES ('prod1', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
+--Conceptual Rental table;
+
+CREATE TABLE conceptualrental(
+id            VARCHAR(40) PRIMARY KEY REFERENCES cproduct(id),
+priceperday   NUMERIC(8,2) DEFAULT 0,
+replacementprice NUMERIC(8,2) DEFAULT 0
+);
+
+INSERT INTO businessobject(id, botype) VALUES ('prod1','edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
 INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod1', 150.00, 'cproduct', 1, 'camera');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod1', 'Canon Rebel version1', 'test dec', .025);
+INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod1', 35.00 , 500.00);
+
 
 INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
 INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.00, 'cproduct', 3, 'camera case');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
 
-INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
+INSERT INTO businessobject(id, botype) VALUES ('prod5', 'edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
 INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod5', 800.00, 'cproduct', 5, 'Panasonic Vierra');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod5', 'Panasonic Vierra', 'Panasonic TV', .025);
+INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod5', 150.00, 1500.00);
 
 --physical product table;
 CREATE TABLE pproduct(
@@ -264,6 +275,7 @@ datein        DATE DEFAULT NULL,
 dateout       DATE DEFAULT NULL,
 datedue       DATE DEFAULT NULL,
 workordernum  INTEGER NOT NULL DEFAULT 0,
+forrentid     VARCHAR(40) REFERENCES forrent(id),
 remindersent  BOOLEAN
 );
 
@@ -294,18 +306,6 @@ INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod2', 150
 INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname, status) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409', 'available');
 INSERT INTO forsale(id, usedstatus) VALUES ('prod2', 'New');
 
---Conceptual Rental table;
-
-CREATE TABLE conceptualrental(
-id            VARCHAR(40) PRIMARY KEY REFERENCES cproduct(id),
-priceperday   NUMERIC(8,2) DEFAULT 0,
-replacementprice NUMERIC(8,2) DEFAULT 0
-);
-
-INSERT INTO businessobject(id, botype) VALUES ('prod6','edu.byu.isys414.jmcmurdi.IntexII.conceptualrental');
-INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod6', 5.00, 'crental', 6, 'memory cards');
-INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod6', '8gb Samsung SD cards', '8gb Samsung SD cards', .025);
-INSERT INTO conceptualrental(id, priceperday, replacementprice) VALUES ('prod6', 2.00 , 25.00);
 
 --transaction TABLE;
 CREATE TABLE transaction(

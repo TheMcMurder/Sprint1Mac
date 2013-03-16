@@ -1,5 +1,6 @@
 package edu.byu.isys414.jmcmurdi.IntexII;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Rental extends RevSource{
@@ -14,10 +15,13 @@ public class Rental extends RevSource{
 	private Date dateDue = null;
 	
 	@BusinessObjectField
-	private boolean reminderSend = false;
+	private boolean reminderSent = false;
 	
 	@BusinessObjectField
 	private int workOrderNum = 0;
+	
+	@BusinessObjectField
+	private String forRentid= null;
 	
 
 	
@@ -42,6 +46,16 @@ public class Rental extends RevSource{
 
 
 	public void setDateIn(Date dateIn) {
+		Calendar calendar = Calendar.getInstance();
+
+	    calendar.setTime(dateIn);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+
+	    java.util.Date realDate = calendar.getTime();
+		
 		this.dateIn = dateIn;
 		setDirty();
 	}
@@ -55,6 +69,16 @@ public class Rental extends RevSource{
 
 
 	public void setDateOut(Date dateOut) {
+		Calendar calendar = Calendar.getInstance();
+
+	    calendar.setTime(dateOut);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+
+	    java.util.Date realDate = calendar.getTime();
+		
 		this.dateOut = dateOut;
 		setDirty();
 	}
@@ -68,20 +92,30 @@ public class Rental extends RevSource{
 
 
 	public void setDateDue(Date dateDue) {
+		
+		Calendar calendar = Calendar.getInstance();
+
+	    calendar.setTime(dateDue);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+
+	    java.util.Date realDate = calendar.getTime();
 		this.dateDue = dateDue;
 		setDirty();
 	}
 
 
 
-	public boolean isReminderSend() {
-		return reminderSend;
+	public boolean isReminderSent() {
+		return reminderSent;
 	}
 
 
 
-	public void setReminderSend(boolean reminderSend) {
-		this.reminderSend = reminderSend;
+	public void setReminderSent(boolean reminderSend) {
+		this.reminderSent = reminderSend;
 		setDirty();
 	}
 
@@ -95,6 +129,19 @@ public class Rental extends RevSource{
 
 	public void setWorkOrderNum(int workOrderNum) {
 		this.workOrderNum = workOrderNum;
+		setDirty();
+	}
+
+
+
+	public String getForRentid() {
+		return forRentid;
+	}
+
+
+
+	public void setForRentid(String forRentid) {
+		this.forRentid = forRentid;
 		setDirty();
 	}
 }
