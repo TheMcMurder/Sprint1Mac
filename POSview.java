@@ -67,7 +67,7 @@ public class POSview {
 			instance = new POSview();
 		}// if
 		return instance;
-	}// getInstance
+	}// Instance
 
 	protected Shell shlPosView;
 	private Text EmpName;

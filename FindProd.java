@@ -47,7 +47,7 @@ public class FindProd extends Dialog {
 	private Product product;
 	private String table;
 	private CProduct cproduct;
-	private PProduct pprodcut;
+	private PProduct pprodcut;	
 	private Spinner spinner;
 	private int amountfromspinner;
 	private boolean cprod = false;

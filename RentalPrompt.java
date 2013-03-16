@@ -1,6 +1,12 @@
 package edu.byu.isys414.jmcmurdi.IntexII;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -33,6 +39,9 @@ public class RentalPrompt extends Dialog {
 	private String custname = null;
 	private PProduct pprod = null;
 	private Spinner spinner;
+	private Rental rental = null;
+	SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
+
 	
 
 	/**
@@ -112,6 +121,12 @@ public class RentalPrompt extends Dialog {
 		Composite composite_3 = new Composite(composite_1, SWT.NONE);
 		
 		Button btnAddToCart = new Button(composite_1, SWT.NONE);
+		btnAddToCart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				addtocartselect();
+			}
+		});
 		btnAddToCart.setText("Add to Cart");
 		
 		Composite composite_2 = new Composite(shell, SWT.NONE);
@@ -196,20 +211,6 @@ public class RentalPrompt extends Dialog {
 		txtcost.setEditable(false);
 		txtcost.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
 		txtcost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(composite_2, SWT.NONE);
-		new Label(composite_2, SWT.NONE);
-		new Label(composite_2, SWT.NONE);
-		new Label(composite_2, SWT.NONE);
-		new Label(composite_2, SWT.NONE);
-		
-		Button btnCompute = new Button(composite_2, SWT.NONE);
-		btnCompute.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				computecost();
-			}
-		});
-		btnCompute.setText("compute");
 		setvalues();
 
 	}
@@ -250,6 +251,35 @@ public class RentalPrompt extends Dialog {
 			ppd.setText(CostperDay + "");
 			}
 		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	private void addtocartselect(){
+		try {
+			rental = BusinessObjectDAO.getInstance().create("Rental");
+			Date today = new Date();
+			String todayString = SDF.format(today);
+			//System.out.println(todayString);
+			
+			Calendar c = Calendar.getInstance();
+			c.setTime(SDF.parse(todayString));
+			c.add(Calendar.DATE, spinner.getSelection());
+			
+			String tempString = SDF.format(c.getTime());
+			Date duedate = SDF.parse(tempString);
+			//System.out.println("2: " + tempString);
+			rental.setDateOut(SDF.parse((todayString)));
+			rental.setDateDue(duedate);
+			Random randomGenerator = new Random();
+			int randomnum = randomGenerator.nextInt(1000000000);
+			rental.setWorkOrderNum(randomnum);
+			
+
+			
+			
+			
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
