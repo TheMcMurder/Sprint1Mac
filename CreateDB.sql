@@ -169,6 +169,7 @@ CREATE TABLE product(
 id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
 prodprice     NUMERIC(8,2) DEFAULT 0,
 prodtype      VARCHAR(50),
+name          VARCHAR(60),
 prodnum       INTEGER
 );
 
@@ -195,13 +196,15 @@ cprodcomrate  NUMERIC(5,4) DEFAULT 0
 );
 
 INSERT INTO businessobject(id, botype) VALUES ('prod1', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
-INSERT INTO product(id, prodprice, prodtype, prodnum) VALUES ('prod1', 150.00, 'camera', 1);
+INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod1', 150.00, 'cproduct', 1, 'camera');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod1', 'Canon Rebel version1', 'test dec', .025);
 
-
 INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
-INSERT INTO product(id, prodprice, prodtype, prodnum) VALUES ('prod3', 5.00, 'camera case', 3);
+INSERT INTO product(id, prodprice, prodtype, prodnum, name) VALUES ('prod3', 5.00, 'cproduct', 1, 'camera case');
 INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
+--INSERT INTO businessobject(id, botype) VALUES ('prod3', 'edu.byu.isys414.jmcmurdi.IntexII.CProduct');
+--INSERT INTO product(id, prodprice, prodtype, prodnum, name ) VALUES ('prod3', 5.00, 'cproduct', 3, 'camera case');
+--INSERT INTO cproduct(id, prodname, description, cprodcomrate) VALUES ('prod3', 'Canon Rebel Camera Case', 'its a cool case', .025);
 
 --physical product table;
 CREATE TABLE pproduct(
@@ -212,15 +215,15 @@ datepuchased  DATE DEFAULT NULL,
 cost          NUMERIC(8,2) DEFAULT 0,
 status        VARCHAR(250),
 pprodcomrate  NUMERIC(5,4) DEFAULT 0,
-name          VARCHAR(60),
+ppname          VARCHAR(60),
 cprodid       VARCHAR(40) REFERENCES cproduct(id),
 storeid       VARCHAR(40) REFERENCES store(id)
 );
 
 
 INSERT INTO businessobject(id, botype) VALUES ('prod2', 'edu.byu.isys414.jmcmurdi.IntexII.PProduct');
-INSERT INTO product(id, prodprice, prodtype, prodnum) VALUES ('prod2', 150.00, 'camera', 2);
-INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1');
+INSERT INTO product(id, prodprice, name, prodnum, prodtype) VALUES ('prod2', 150.00, 'camera', 2, 'pproduct');
+INSERT INTO pproduct(id, serialnum, datepuchased, cost, pprodcomrate, cprodid, storeid, ppname) VALUES ('prod2', 'tk427', '2012-01-01 13:40:01', 80.59, .025, 'prod1', 'store1', 'Canon Rebel v1 24309283420385235409');
 
 --store product association class table;
 CREATE TABLE storeprod(
@@ -233,6 +236,9 @@ shelflocation VARCHAR(250)
 
 INSERT INTO businessobject (id, botype) VALUES ('storeprod1', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
 INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod1', 'store1', 'prod1', 7, 'Isle 3 North side behind glass pane');
+
+INSERT INTO businessobject (id, botype) VALUES ('storeprod2', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
+INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod2', 'store1', 'prod3', 7, 'Lobby in bin');
 
 --transaction TABLE;
 CREATE TABLE transaction(

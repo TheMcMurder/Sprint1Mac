@@ -19,6 +19,8 @@ public class Product extends BusinessObject {
 	private String prodType = null;
 	@BusinessObjectField 
 	private int prodnum = 0;
+	@BusinessObjectField
+	private String name = null;
 	
 	/** Creates a new instance of this object */
 	public Product(String id) {
@@ -67,6 +69,15 @@ public class Product extends BusinessObject {
 	 */
 	public void setProdnum(int prodnum) {
 		this.prodnum = prodnum;
+		setDirty();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 		setDirty();
 	}
 

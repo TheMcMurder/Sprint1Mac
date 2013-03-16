@@ -32,7 +32,7 @@ public class PProduct extends Product {
 	@BusinessObjectField
 	private String storeid = null;
 	@BusinessObjectField
-	private String name = null;
+	private String ppname = null;
 	
 	
 	/** Creates a new instance of this object */
@@ -189,15 +189,18 @@ public class PProduct extends Product {
 	}
 
 
-	public String getName() {
-		return name;
+	public String getPpname() {
+		return ppname;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPpname(String ppname) {
+		this.ppname = ppname;
 		setDirty();
 	}
+
+
+	
 
 	
 
