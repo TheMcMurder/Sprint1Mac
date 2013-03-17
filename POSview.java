@@ -263,6 +263,17 @@ public class POSview {
 			}
 		});
 		mntmReminderemail.setText("ReminderEmail");
+		
+		MenuItem mntmChargeExtremeOverdue = new MenuItem(menu_4, SWT.NONE);
+		mntmChargeExtremeOverdue.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				easyselling();
+			}
+
+			
+		});
+		mntmChargeExtremeOverdue.setText("Charge Extreme Overdue");
 
 		MenuItem mntmSearch = new MenuItem(menu_4, SWT.CASCADE);
 		mntmSearch.setText("Search");
@@ -1061,5 +1072,9 @@ public class POSview {
 
 	private void disablemanagermenu() {
 
+	}
+	private void easyselling() {
+		BatchPurchase bp = new BatchPurchase(shlPosView, 0);
+		bp.open();
 	}
 }
