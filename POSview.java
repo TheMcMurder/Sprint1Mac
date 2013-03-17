@@ -180,11 +180,11 @@ public class POSview {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-//		try {
-//			CreateDB.main(null);
-//		} catch (Exception dbe) {
-//			System.out.println("Db creation error");
-//		}
+		// try {
+		// CreateDB.main(null);
+		// } catch (Exception dbe) {
+		// System.out.println("Db creation error");
+		// }
 
 		shlPosView = new Shell();
 		shlPosView.setTouchEnabled(true);
@@ -543,10 +543,10 @@ public class POSview {
 		tblclmnPrice.setWidth(100);
 		tblclmnPrice.setText("Price");
 
-		tcProduct.setLabelProvider(new ColumnLabelProvider(){
-			public String getText(Object element){
+		tcProduct.setLabelProvider(new ColumnLabelProvider() {
+			public String getText(Object element) {
 				RevSource rs1 = (RevSource) element;
-				if (rs1.getRevtype().equals("Sale")){
+				if (rs1.getRevtype().equals("Sale")) {
 					Sale sale1 = (Sale) element;
 					Product prod1;
 					try {
@@ -555,7 +555,7 @@ public class POSview {
 					} catch (DataException e) {
 						e.printStackTrace();
 					}
-				}else if(rs1.getRevtype().equals("Rental")){
+				} else if (rs1.getRevtype().equals("Rental")) {
 					Rental rent1 = (Rental) element;
 					Product prod1;
 					try {
@@ -566,51 +566,50 @@ public class POSview {
 					}
 				}
 				return null;
-			}	
+			}
 		});
 
-		tcQuantity.setLabelProvider(new ColumnLabelProvider(){
-			public String getText(Object element){
+		tcQuantity.setLabelProvider(new ColumnLabelProvider() {
+			public String getText(Object element) {
 				RevSource rs1 = (RevSource) element;
-				if (rs1.getRevtype().equals("Sale")){
+				if (rs1.getRevtype().equals("Sale")) {
 					Sale sale1 = (Sale) element;
 					DecimalFormat df = new DecimalFormat("###");
-					return df.format(sale1.getQuantity())+"";
-				}else if(rs1.getRevtype().equals("Rental")){
+					return df.format(sale1.getQuantity()) + "";
+				} else if (rs1.getRevtype().equals("Rental")) {
 					Rental rent1 = (Rental) element;
 					DecimalFormat df = new DecimalFormat("###");
-					return df.format(rent1.getNumDays())+"";
+					return df.format(rent1.getNumDays()) + "";
 				}
 				return "error";
-//				
-//				Sale sale1 = (Sale) element;
-//				DecimalFormat df = new DecimalFormat("###");
-//				return df.format(sale1.getQuantity())+"";
-			}	
+				//
+				// Sale sale1 = (Sale) element;
+				// DecimalFormat df = new DecimalFormat("###");
+				// return df.format(sale1.getQuantity())+"";
+			}
 		});
-		
-		tcPrice.setLabelProvider(new ColumnLabelProvider(){
-			public String getText(Object element){
-				
+
+		tcPrice.setLabelProvider(new ColumnLabelProvider() {
+			public String getText(Object element) {
+
 				RevSource rs1 = (RevSource) element;
-				if (rs1.getRevtype().equals("Sale")){
+				if (rs1.getRevtype().equals("Sale")) {
 					Sale sale1 = (Sale) element;
 					DecimalFormat df = new DecimalFormat("###.##");
 					df.setMinimumFractionDigits(2);
-					return df.format(sale1.getChargeamount())+"";
-				}else if(rs1.getRevtype().equals("Rental")){
+					return df.format(sale1.getChargeamount()) + "";
+				} else if (rs1.getRevtype().equals("Rental")) {
 					Rental rent1 = (Rental) element;
 					DecimalFormat df = new DecimalFormat("###.##");
 					df.setMinimumFractionDigits(2);
-					return df.format(rent1.getChargeamount())+"";
+					return df.format(rent1.getChargeamount()) + "";
 				}
 				return "error";
-				
-				
-//				Sale sale1 = (Sale) element;
-//				DecimalFormat df = new DecimalFormat("###.##");
-//				df.setMinimumFractionDigits(2);
-//				return df.format(sale1.getChargeamt())+"";
+
+				// Sale sale1 = (Sale) element;
+				// DecimalFormat df = new DecimalFormat("###.##");
+				// df.setMinimumFractionDigits(2);
+				// return df.format(sale1.getChargeamt())+"";
 			}
 		});
 		prodTable.setContentProvider(new ArrayContentProvider());
@@ -618,55 +617,72 @@ public class POSview {
 		// m_bindingContext = initDataBindings();
 
 	}
-	
+
 	/**
 	 * method run when the edit item button is clicked
 	 */
-	private void editItemclicked(){
-		
-		
-		//This is the code for the rental prompt and doesn't really belong here.
-		Product p = null;
-		try {
-			p = BusinessObjectDAO.getInstance().searchForBO("Product", new SearchCriteria("id", "prod4"));
-		} catch (DataException e) {
-			e.printStackTrace();
-		}
-		if (cust != null){
-		String custstring = cust.getFirstName() +  " " +cust.getLastName();
-		checkoutrental(p, custstring);
-		
-		//temprental =  
-		
-		}
-		//end doesn't belong code
+	private void editItemclicked() {
+
+		// //This is the code for the rental prompt and doesn't really belong here.
+//		Product p = null;
+//		try {
+//			p = BusinessObjectDAO.getInstance().searchForBO("Product", new SearchCriteria("id", "prod4"));
+//			System.out.println("I'm running on itemclicked");
+//		} catch (DataException e) {
+//			e.printStackTrace();
+//		}
+//
+//		checkin(p);
+
+		// Product p = null;
+		// try {
+		// p = BusinessObjectDAO.getInstance().searchForBO("Product", new SearchCriteria("id", "prod4"));
+		// } catch (DataException e) {
+		// e.printStackTrace();
+		// }
+		// if (cust != null){
+		// String custstring = cust.getFirstName() + " " +cust.getLastName();
+		// checkoutrental(p, custstring);
+		//
+		// //temprental =
+		//
+		// }
+		// //end doesn't belong code
 	}
+
+	private void checkin(Product p) {
+		System.out.println("I'm running on checkin");
+		Rentalcheckin checkin = new Rentalcheckin(shlPosView, 0, p);
+		checkin.open();
+		Rental temprental = null;
+
+	}
+
 	/**
 	 * Opens the checkout window and allows for adding a rental object to the transaction
 	 */
-	private void checkoutrental(Product p, String custstring){
+	private void checkoutrental(Product p, String custstring) {
 		RentalPrompt rentprompt = new RentalPrompt(shlPosView, 0, p, custstring);
 		rentprompt.open();
 		Rental temprental = null;
 
 		temprental = rentprompt.getRental();
-		if(temprental != null){
-//			System.out.println("Rental testing (POSView): ");
-//			System.out.println("Rental Id: " + temprental.getId());
-//			System.out.println("Rental Date Out: " + temprental.getDateOut());
-//			System.out.println("Rental Date Due: " + temprental.getDateDue());
-//			System.out.println("Rental Date in: " + temprental.getDateIn());
-//			System.out.println("Reminder Sent: " + temprental.isReminderSent());
-//			System.out.println("Workorder #: " + temprental.getWorkOrderNum());
-//			System.out.println("ForRentID: " + temprental.getForRentid());
-//			//salelist.add(rental);
-			
-			
-			//Add it here
+		if (temprental != null) {
+			// System.out.println("Rental testing (POSView): ");
+			// System.out.println("Rental Id: " + temprental.getId());
+			// System.out.println("Rental Date Out: " + temprental.getDateOut());
+			// System.out.println("Rental Date Due: " + temprental.getDateDue());
+			// System.out.println("Rental Date in: " + temprental.getDateIn());
+			// System.out.println("Reminder Sent: " + temprental.isReminderSent());
+			// System.out.println("Workorder #: " + temprental.getWorkOrderNum());
+			// System.out.println("ForRentID: " + temprental.getForRentid());
+			// //salelist.add(rental);
+
+			// Add it here
 			temprental.setRevtype("Rental");
 			temprental.setChargeamount(rentprompt.getCost());
 			trans.addRevSource(temprental);
-			
+
 			trans.setStoreid(store.getId());
 			Date today = new Date();
 
@@ -680,12 +696,12 @@ public class POSview {
 			// trans.setRevid(//revid)
 			additemtolist();
 			refreshpricevalues();
-			//end add
-			
+			// end add
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Opens the add Customer Dialog and field checks
 	 */
@@ -766,11 +782,32 @@ public class POSview {
 						dc.setJournalEntryid(je.getId());
 						dc.save();
 					} else if (i == 1) {
-						dc.setAmount(trans.getSubtotal());
-						dc.setGlName("Sales Revenue");
-						dc.setIsDebit(false);
-						dc.setJournalEntryid(je.getId());
-						dc.save();
+						double salestotal = 0;
+						double renttotal = 0;
+
+						for (RevSource rs3 : trans.getRevsources()) {
+							if (rs3.getRevtype().equals("Sale")) {
+								salestotal += rs3.getChargeamount();
+							} else {
+								renttotal += rs3.getChargeamount();
+							}
+						}
+						if (salestotal > 0) {
+							dc.setAmount(salestotal);
+							dc.setGlName("Sales Revenue");
+							dc.setIsDebit(false);
+							dc.setJournalEntryid(je.getId());
+							dc.save();
+						}
+						if (renttotal > 0) {
+							DebitCredit dc1 = BusinessObjectDAO.getInstance().create("DebitCredit");
+							dc1.setAmount(salestotal);
+							dc1.setGlName("Rental Revenue");
+							dc1.setIsDebit(false);
+							dc1.setJournalEntryid(je.getId());
+							dc1.save();
+						}
+
 					} else if (i == 2) {
 						dc.setAmount(trans.getTax());
 						dc.setGlName("Sales Tax");
@@ -808,9 +845,9 @@ public class POSview {
 
 				}
 				for (RevSource rs : trans.getRevsources()) {
-					if(rs.getRevtype().equals("Rental")){
+					if (rs.getRevtype().equals("Rental")) {
 						Rental rnt = (Rental) rs;
-						//System.out.println("succes");
+						// System.out.println("succes");
 						String id = rnt.getForRentid();
 						PProduct pp = BusinessObjectDAO.getInstance().read(id);
 						pp.setStatus("Rented");
@@ -826,9 +863,9 @@ public class POSview {
 				p.save();
 				trans.setPaymentid(p.getId());
 				trans.setJournalentryid(je.getId());
-				//System.out.println(comm.getId().length());
+				// System.out.println(comm.getId().length());
 				trans.setCommid(comm.getId());
-				//System.out.println(trans.getCommid().length());
+				// System.out.println(trans.getCommid().length());
 				trans.save();
 
 			} catch (DataException e) {
@@ -850,7 +887,7 @@ public class POSview {
 		// System.out.println("Itemq: " + itemquantity);
 		if (pprod != null) {
 			try {
-				//RUN HERE IT"S TOTALLY SAFE
+				// RUN HERE IT"S TOTALLY SAFE
 				sale = null;
 			} catch (Exception e) {
 				e.printStackTrace();
