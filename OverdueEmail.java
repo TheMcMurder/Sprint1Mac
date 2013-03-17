@@ -151,7 +151,8 @@ public class OverdueEmail extends Dialog {
 							String fromname = "Robot";
 							
 							BatchEmail.send(from, fromname, custEmail, subject, message);
-							
+							temprental.setReminderSent(true);
+							temprental.save();
 							
 							//send(String fromAddress, String fromName, String toAddress, String subject, String msg)
 
