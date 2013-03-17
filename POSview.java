@@ -253,6 +253,16 @@ public class POSview {
 
 		Menu menu_4 = new Menu(mntmTools);
 		mntmTools.setMenu(menu_4);
+		
+		MenuItem mntmReminderemail = new MenuItem(menu_4, SWT.NONE);
+		mntmReminderemail.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				OverdueEmail ode = new OverdueEmail(shlPosView,0);
+				ode.open();
+			}
+		});
+		mntmReminderemail.setText("ReminderEmail");
 
 		MenuItem mntmSearch = new MenuItem(menu_4, SWT.CASCADE);
 		mntmSearch.setText("Search");
@@ -651,7 +661,7 @@ public class POSview {
 	}
 
 	private void checkin(Product p) {
-		System.out.println("I'm running on checkin");
+		//System.out.println("I'm running on checkin");
 		Rentalcheckin checkin = new Rentalcheckin(shlPosView, 0, p);
 		checkin.open();
 		Rental temprental = null;
