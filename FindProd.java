@@ -206,7 +206,9 @@ public class FindProd extends Dialog {
 //		
 //		
 //	}
-
+	/**
+	 * Product searching method
+	 */
 
 	private void runSearch() {
 		ArrayList <CProduct> tempList2 = new ArrayList<CProduct>();
