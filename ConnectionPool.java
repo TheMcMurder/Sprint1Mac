@@ -36,9 +36,9 @@ public class ConnectionPool {
   //private static String DRIVER_NAME = "org.apache.derby.jdbc.ClientDriver";
   
   //LOCAL SETTINGS
-//  private static String DATABASE_URL = "jdbc:mysql://localhost:8889/MyStuff";
-//  private static String DATABASE_USERNAME = "root";
-//  private static String DATABASE_PASSWORD = "root";
+  private static String DATABASE_URL = "jdbc:mysql://localhost:8889/MyStuff";
+  private static String DATABASE_USERNAME = "root";
+  private static String DATABASE_PASSWORD = "root";
   private static String DRIVER_NAME = "com.mysql.jdbc.Driver";
   private static final int MAX_CONNECTIONS = 1;
   
@@ -48,9 +48,9 @@ public class ConnectionPool {
 //  private static String DATABASE_PASSWORD = "danger";
   
   //prod settings
-  private static String DATABASE_URL = "jdbc:mysql://localhost:3306/mystuff";
-  private static String DATABASE_USERNAME = "danger";
-  private static String DATABASE_PASSWORD = "danger";
+//  private static String DATABASE_URL = "jdbc:mysql://localhost:3306/mystuff";
+//  private static String DATABASE_USERNAME = "danger";
+//  private static String DATABASE_PASSWORD = "danger";
   
   //////////////////////////////////////////////
   ///   Singelton code

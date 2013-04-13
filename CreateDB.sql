@@ -17,8 +17,8 @@ DROP TABLE IF EXISTS pproduct;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS sale;
 DROP TABLE IF EXISTS rental;
-DROP TABLE IF EXISTS print; --CLASS NONEXISTANT; -- FAKE DATA NONEXISTANT;
-DROP TABLE IF EXISTS printorder; --Class NONEXISTANT; -- FAKE DATA NONEXISTANT;
+DROP TABLE IF EXISTS print;
+DROP TABLE IF EXISTS printorder; 
 DROP TABLE IF EXISTS revsource;
 DROP TABLE IF EXISTS commission;
 DROP TABLE IF EXISTS employee;
@@ -284,6 +284,16 @@ INSERT INTO storeprod (id, storeid, cprodid, quantityleft, shelflocation) VALUES
 INSERT INTO businessobject(id, botype) VALUES ('storeprod3', 'edu.byu.isys414.jmcmurdi.IntexII.StoreProd');
 INSERT INTO storeprod(id, storeid, cprodid, quantityleft, shelflocation) VALUES ('storeprod3', 'store1', 'prod5', 3, 'behind the counter');
 
+--PrintOrder table;
+CREATE TABLE printorder(
+id            VARCHAR(40) PRIMARY KEY REFERENCES revsource,
+quantity      INTEGER
+);
+
+INSERT INTO businessobject (id, botype) VALUES ('revsource3', 'edu.byu.isys414.jmcmurdi.IntexII.Printorder');
+INSERT INTO revsource (id, chargeamount, revtype) VALUES ('revsource3', 15.00, 'Print');
+INSERT INTO printorder(id, quantity) VALUES ('revsource3', 15);
+
 --Print Table;
 CREATE TABLE print(
 id            VARCHAR(40) PRIMARY KEY REFERENCES businessobject(id),
@@ -293,11 +303,21 @@ type          VARCHAR(40),
 printorderid  VARCHAR(40) REFERENCES printorder(id)
 );
 
---PrintOrder table;
-CREATE TABLE printorder(
-id            VARCHAR(40) PRIMARY KEY REFERENCES revsource,
-quantity      INTEGER
-);
+INSERT INTO businessobject(id, botype) VALUES ('print1', 'edu.byu.isys414.jmcmurdi.IntexII.Print');
+INSERT INTO print(id, price, size, type) values ('print1', 1.05, '4x6', '1');
+
+INSERT INTO businessobject(id, botype) VALUES ('print2', 'edu.byu.isys414.jmcmurdi.IntexII.Print');
+INSERT INTO print(id, price, size, type) values ('print2', 2.20, '5x7', '2');
+
+INSERT INTO businessobject(id, botype) VALUES ('print3', 'edu.byu.isys414.jmcmurdi.IntexII.Print');
+INSERT INTO print(id, price, size, type) values ('print3', 5.05, '8x10', '3');
+
+INSERT INTO businessobject(id, botype) VALUES ('print4', 'edu.byu.isys414.jmcmurdi.IntexII.Print');
+INSERT INTO print(id, price, size, type) values ('print4', 7.05, '11x13', '4');
+
+INSERT INTO businessobject(id, botype) VALUES ('print5', 'edu.byu.isys414.jmcmurdi.IntexII.Print');
+INSERT INTO print(id, price, size, type) values ('print5', 12.05, '16x20', '5');
+
 
 --Rental table;
 CREATE TABLE rental(
