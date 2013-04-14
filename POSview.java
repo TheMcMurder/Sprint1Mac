@@ -89,6 +89,7 @@ public class POSview {
 	private Transaction trans;
 	private CProduct cprod;
 	private PProduct pprod;
+	private Product prod;
 	private Sale sale;
 	private int itemquantity = 0;
 	public Store store = null;
@@ -253,6 +254,32 @@ public class POSview {
 
 		Menu menu_4 = new Menu(mntmTools);
 		mntmTools.setMenu(menu_4);
+		
+		MenuItem mntmCheckoutRental = new MenuItem(menu_4, SWT.NONE);
+		mntmCheckoutRental.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					Product p = BusinessObjectDAO.getInstance().searchForBO("product", new SearchCriteria("id", "prod4"));
+					System.out.println("Got Product" + p.getId());
+					PProduct tempp = BusinessObjectDAO.getInstance().searchForBO("pproduct", new SearchCriteria("id", p.getId()));
+					System.out.println("got pprod" + tempp.getId());
+					if(tempp.getStatus().equals("available")){
+						checkoutrental(p,cust.getId());
+					}
+					if(tempp.getStatus().equals("Sold")){
+						//do something
+					}
+					else{
+						checkin(p);
+					}
+				} catch (DataException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmCheckoutRental.setText("Checkout Rental");
 		
 		MenuItem mntmReminderemail = new MenuItem(menu_4, SWT.NONE);
 		mntmReminderemail.addSelectionListener(new SelectionAdapter() {
@@ -854,7 +881,6 @@ public class POSview {
 						dc.setJournalEntryid(je.getId());
 						dc.save();
 					}
-					// TODO
 
 					// System.out.println(now);
 					try {
@@ -888,7 +914,9 @@ public class POSview {
 				trans.setCommid(comm.getId());
 				// System.out.println(trans.getCommid().length());
 				trans.save();
-
+				
+				//TODO
+				
 			} catch (DataException e) {
 				e.printStackTrace();
 			}
@@ -898,14 +926,40 @@ public class POSview {
 
 	private void lookupProduct() {
 		FindProd findprod = new FindProd(shlPosView, 0);
-
 		findprod.open();
+		this.prod = findprod.getProduct();
 		this.pprod = findprod.getPprodcut();
 		this.cprod = findprod.getCproduct();
 		// System.out.println("PPROD: " + pprod);
 		// System.out.println("CPROD: " + cprod);
 		this.itemquantity = findprod.getAmountfromspinner();
 		// System.out.println("Itemq: " + itemquantity);
+		if(prod != null){
+			if(prod.getProdType().equals("cproduct"));{
+				try {
+					cprod = BusinessObjectDAO.getInstance().searchForBO("cproduct", new SearchCriteria("id", prod.getId()));
+				} catch (DataException e) {
+					
+					e.printStackTrace();
+				}
+			}if(prod.getProdType().equals("rental")){
+				try {
+					PProduct tempp = BusinessObjectDAO.getInstance().searchForBO("pproduct", new SearchCriteria("id", prod.getId()));
+					if(tempp.getStatus().equals("available")){
+						checkoutrental(prod,cust.getId());
+					}
+					if(tempp.getStatus().equals("Sold")){
+						//do something
+					}
+					else{
+						checkin(prod);
+					}
+				} catch (DataException e) {
+				
+					e.printStackTrace();
+				}
+			}
+		}
 		if (pprod != null) {
 			try {
 				// RUN HERE IT"S TOTALLY SAFE
@@ -950,6 +1004,7 @@ public class POSview {
 		}
 		pprod = null;
 		cprod = null;
+		prod = null;
 	}
 
 	/**

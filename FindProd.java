@@ -38,8 +38,9 @@ public class FindProd extends Dialog {
 	private Text text;
 	private Combo criteriaCombo;
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
-	public ArrayList <CProduct> resultsList = null;
+	//public ArrayList <CProduct> resultsList = null;
 	public ArrayList <PProduct> presultsList = null;
+	public ArrayList <Product> resultsList = null;
 	public TableViewerColumn tcName;
 	public TableViewerColumn tcPhone;
 	private Combo ResultCombo;
@@ -213,7 +214,7 @@ public class FindProd extends Dialog {
 	private void runSearch() {
 		ArrayList <CProduct> tempList2 = new ArrayList<CProduct>();
 		ArrayList <PProduct> tempList3 = new ArrayList<PProduct>();
-		resultsList = new ArrayList<CProduct>();
+		resultsList = new ArrayList<Product>();
 		int comboSelection = criteriaCombo.getSelectionIndex();
 		String searchfor = text.getText();
 		String columnName = null;
@@ -295,14 +296,7 @@ public class FindProd extends Dialog {
 		//TODO
 		selectionindex = ResultCombo.getSelectionIndex();
 		product = resultsList.get(selectionindex);
-		if (cprod){
-			cproduct = resultsList.get(selectionindex);
-		}
-		else {
-			System.out.println("error");
-			pprodcut = presultsList.get(selectionindex);
-			//pproduct = resultsList.get(selectionindex);
-		}
+		
 		amountfromspinner = getSpinner();
 		//System.out.println("Class Product: " + product.getId());
 		exitpopup();
@@ -372,6 +366,20 @@ public class FindProd extends Dialog {
 	 */
 	public void setAmountfromspinner(int amountfromspinner) {
 		this.amountfromspinner = amountfromspinner;
+	}
+
+	/**
+	 * @return the product
+	 */
+	public Product getProduct() {
+		return product;
+	}
+
+	/**
+	 * @param product the product to set
+	 */
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 
